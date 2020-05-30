@@ -1,2 +1,0 @@
-# mediumClapUsingXstate
-Created with CodeSandbox
