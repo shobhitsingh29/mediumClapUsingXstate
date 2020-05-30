@@ -154,13 +154,7 @@ function App() {
   const [current, send] = useMachine(toggleMachine);
   const active = current.matches("active");
 
-  const {
-    count,
-    isClapping,
-    totalClaps,
-    isClapped,
-    clapsInARow
-  } = current.context;
+  const { count } = current.context;
 
   return (
     <StyledApp className="App">
