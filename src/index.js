@@ -70,14 +70,6 @@ const ClapButton = styled.button`
   &:active {
     box-shadow: none;
   }
-
-  ${props =>
-    props.isClapping &&
-    css`
-      border: 3px solid green;
-      box-shadow: none;
-      transform: scale(1.2);
-    `}
 `;
 
 const ClapCount = styled.div`
@@ -161,62 +153,7 @@ const StyledApp = styled.div`
 function App() {
   const [current, send] = useMachine(toggleMachine);
   const active = current.matches("active");
-  const clapButton = useRef(null);
 
-  const handleClapping = e => {
-    e.preventDefault();
-    this.handleClap();
-  };
-
-  const handleClearClaps = e => {
-    e.preventDefault();
-    this.setState(prevState => ({
-      isClapped: false,
-      userClaps: 0,
-      totalClaps: prevState.totalClaps - prevState.userClaps,
-      clapsInARow: 0
-    }));
-  };
-
-  const handleClap = () => {
-    setTimeout(() => {
-      this.setState({
-        isClapping: false
-      });
-    }, 100);
-
-    this.setState(prevState => ({
-      userClaps: prevState.userClaps + 1,
-      totalClaps: prevState.totalClaps + 1,
-      isClapped: true,
-      isClapping: true
-    }));
-  };
-
-  const handleSingleClap = e => {
-    e.preventDefault();
-    this.handleClap();
-  };
-
-  handleRepeatClapStart = e => {
-    e.preventDefault();
-    this.clapRepeatTimer = setInterval(() => {
-      this.handleClap();
-      this.setState(prevState => ({
-        clapsInARow: prevState.clapsInARow + 1
-      }));
-    }, 100);
-  };
-
-  handleRepeatClapEnd = e => {
-    e.preventDefault();
-
-    clearInterval(this.clapRepeatTimer);
-
-    this.setState({
-      clapsInARow: 0
-    });
-  };
   const {
     count,
     isClapping,
@@ -228,7 +165,7 @@ function App() {
   return (
     <StyledApp className="App">
       <ClapButtonWrap>
-        <ClapsSessionCount isClapping={clapsInARow !== 0} />
+        <ClapsSessionCount />
         <HandIcon
           onClick={() => send("TOGGLE")}
           role="img"
